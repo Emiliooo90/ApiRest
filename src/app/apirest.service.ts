@@ -40,4 +40,19 @@ export class ApirestService {
       })
     })
   }
+
+  getPost()
+  {
+    let url = this.apiURL + 'users' + 'posts';
+    return new Promise((resolve, reject) =>
+    {
+      this.http.get(url).subscribe((data: any) =>
+      {
+        data.forEach(item => {this.listado.push(item) });
+        console.table(this.listado);
+      },
+      error => { console.log("error en la solicitud")
+      })
+    })
+  }
 }

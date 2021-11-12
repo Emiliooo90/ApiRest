@@ -21,8 +21,8 @@ export class CrudService {
      await this.storage.set(valor[0].id, valor);
    }
 
-   get(key:string)
+   get(id)
    {
-     return this.storage.get(key)
+     return this.storage.get(id)
    }
 }

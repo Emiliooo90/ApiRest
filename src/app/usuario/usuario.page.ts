@@ -25,46 +25,73 @@ export class UsuarioPage implements OnInit {
     let listado = this.api.listado;
     let usuario = nombre.value;
     let contraseña = clave.value;
+    let validar = false;
+
+     if (usuario.trim().length == 0 && contraseña.trim().length == 0)
+    {
+       const toast = await this.toastController.create({
+        message: 'Debe ingresar información',
+        duration: 3000,
+        color: "danger"
+      });
+      toast.present();
+      return;
+    }
+
+    else if (usuario.trim().length == 0)
+    {
+      const toast = await this.toastController.create({
+        message: 'Debe ingresar un nombre',
+        duration: 3000,
+        color: "danger"
+      });
+      toast.present();
+      return;
+    }
+
+    else if (contraseña.trim().length == 0)
+    {
+      const toast = await this.toastController.create({
+        message: 'Debe ingresar una contraseña',
+        duration: 3000,
+        color: "danger"
+      });
+      toast.present();
+      return;
+    }
     for (let usuarios of listado)
     {
-      if (usuarios.username == usuario || contraseña == "1234")
-      {
-        const toast = await this.toastController.create({
-          message: 'Usuario encontrado con éxito',
-          duration: 3000,
-          color: "success"
-        });
-        toast.present();
-      }
 
-      else if (usuario.trim().length == 0)
+      if (usuarios.username == nombre.value)
       {
-        const toast = await this.toastController.create({
-          message: 'Debe ingresar su nombre de usuario',
-          duration: 3000,
-          color: "danger"
-        });
-        toast.present();
+        validar = true;
+        const cantidad = localStorage.length + 1;
+        localStorage.setItem(usuarios.id, nombre.value)
       }
+    }
+    
+    if (validar == false || usuario != nombre.value || contraseña != "1234")
+    {
+      //this.crud.set(nombre.value, clave.value)
 
-      else if (contraseña.trim().length == 0)
-      {
-        const toast = await this.toastController.create({
-          message: 'Debe ingresar su contraseña',
-          duration: 3000,
-          color: "danger"
-        });
-        toast.present()
-      }
-      else
-      {
-        const toast = await this.toastController.create({
-          message: 'Usuario no encontrado',
-          duration: 3000,
-          color: "danger"
-        });
-        toast.present();
-      }
+      const toast = await this.toastController.create({
+        message: 'Usuario no encontrado',
+        duration: 3000,
+        color: "danger"
+      });
+      toast.present();
+      return;
+    }
+
+    else
+    {
+      const toast = await this.toastController.create({
+        message: 'Usuario encontrado con éxito',
+        duration: 3000,
+        color: "success"
+      });
+      toast.present()
+      return;
     }
   }
 
