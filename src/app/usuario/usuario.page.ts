@@ -3,6 +3,7 @@ import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { CrudService } from '../crud.service';
 import { ApirestService } from '../apirest.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuario',
@@ -14,15 +15,17 @@ export class UsuarioPage implements OnInit {
   constructor(private alertController: AlertController,
               private toastController: ToastController,
               private crud: CrudService,
-              private api: ApirestService) { }
+              private apirestService: ApirestService,
+              private activatedRouter: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
-    this.api.getUsers();
+    this.apirestService.getUsers();
   }
 
   async validar(nombre: HTMLInputElement, clave: HTMLInputElement)
   {
-    let listado = this.api.listado;
+    let listado = this.apirestService.listado;
     let usuario = nombre.value;
     let contraseña = clave.value;
     let validar = false;
@@ -59,6 +62,17 @@ export class UsuarioPage implements OnInit {
       toast.present();
       return;
     }
+
+    else if (contraseña != "1234")
+    {
+      const toast = await this.toastController.create({
+        message: 'La contraseña ingresada es inválida',
+        duration: 3000,
+        color: "danger"
+      });
+      toast.present();
+      return;
+    }
     for (let usuarios of listado)
     {
 
@@ -70,7 +84,7 @@ export class UsuarioPage implements OnInit {
       }
     }
     
-    if (validar == false || usuario != nombre.value || contraseña != "1234")
+    if (validar == false || usuario != nombre.value)
     {
       //this.crud.set(nombre.value, clave.value)
 
@@ -91,6 +105,9 @@ export class UsuarioPage implements OnInit {
         color: "success"
       });
       toast.present()
+      nombre.value = "";
+      clave.value = "";
+      this.router.navigateByUrl('/detalle')
       return;
     }
   }

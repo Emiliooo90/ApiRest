@@ -1,16 +1,30 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Lista de usuarios</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/usuario">    
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>Comentarios</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-text class="ion-text-center">
+    <h1>Lista de comentarios</h1>
+  </ion-text>
   <div *ngIf="listado.length > 0">
     <ion-list>
-      <div *ngFor="let aux of listado">
+      <div *ngFor="let aux of listado" [routerLink]="['/', aux.id]">
         <ion-item>
-          <ion-label>{{aux.postId}}</ion-label>
+          <ion-label> Id del comentario: {{aux.id}}</ion-label>
         </ion-item>
+        <ion-item>
+          <ion-label> Título: {{aux.title}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label> Comentario: {{aux.body}}</ion-label>
+        </ion-item>
+        <br>
       </div>
     </ion-list>
   </div>
@@ -20,6 +34,9 @@
   <ion-toolbar>
     <ion-button (click)="listar()">
       <ion-icon slot="icon-only" name="list"></ion-icon>
+    </ion-button>
+    <ion-button (click)="salir()" slot="end">
+      <ion-icon slot="icon-only" name="exit-outline"></ion-icon>
     </ion-button>
   </ion-toolbar>
 </ion-footer>

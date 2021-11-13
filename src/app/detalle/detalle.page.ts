@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CrudService } from '../crud.service';
 import { ApirestService } from '../apirest.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-detalle',
@@ -9,17 +10,30 @@ import { ApirestService } from '../apirest.service';
 })
 export class DetallePage implements OnInit {
 
-  listado = []
+  listado = [];
+  datos: any;
   constructor( private crud: CrudService,
-              private api: ApirestService) { }
+              private apirestService: ApirestService,
+              private activatedRouter: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
   }
 
   listar()
   {
-    this.api.getPost;
-    this.listado = this.api.listado;
+    for (let i; i <= localStorage.length; i++)
+    {
+      this.datos = localStorage.getItem(i.toString())
+    }
+    this.apirestService.getPost(this.datos);
+    this.listado = this.apirestService.listado;
+  }
+
+  salir()
+  {
+    localStorage.clear();
+    this.router.navigateByUrl('/usuario')
   }
 
 }
