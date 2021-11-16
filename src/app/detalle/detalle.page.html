@@ -1,9 +1,5 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/usuario">    
-      </ion-back-button>
-    </ion-buttons>
     <ion-title>Comentarios</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -14,7 +10,7 @@
   </ion-text>
   <div *ngIf="listado.length > 0">
     <ion-list>
-      <div *ngFor="let aux of listado" [routerLink]="['/', aux.id]">
+      <div *ngFor="let aux of listado" [routerLink]="['../comentarios/', aux.id]">
         <ion-item>
           <ion-label> Id del comentario: {{aux.id}}</ion-label>
         </ion-item>

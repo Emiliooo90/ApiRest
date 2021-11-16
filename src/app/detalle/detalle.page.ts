@@ -22,10 +22,7 @@ export class DetallePage implements OnInit {
 
   listar()
   {
-    for (let i; i <= localStorage.length; i++)
-    {
-      this.datos = localStorage.getItem(i.toString())
-    }
+    this.datos = localStorage.getItem("1");
     this.apirestService.getPost(this.datos);
     this.listado = this.apirestService.listado;
   }

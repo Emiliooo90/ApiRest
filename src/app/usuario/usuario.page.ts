@@ -80,7 +80,7 @@ export class UsuarioPage implements OnInit {
       {
         validar = true;
         const cantidad = localStorage.length + 1;
-        localStorage.setItem(usuarios.id, nombre.value)
+        localStorage.setItem("1", usuarios.id)
       }
     }
     

@@ -9,17 +9,26 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./comentarios.page.scss'],
 })
 export class ComentariosPage implements OnInit {
+  listado = [];
+  idPersona: String;
 
   constructor(private apirestService: ApirestService,
               private activatedRoute: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(p => {
-      const id = p.get('id');
-      console.log(id);
-      this.apirestService.getUser(id);
+    this.activatedRoute.paramMap.subscribe(async p => {
+      this.idPersona = p.get('id');
     })
+    this.leer();
+  }
+
+  async leer()
+  {
+    await this.apirestService.getComment(this.idPersona);
+    this.listado = this.apirestService.listado;
+    console.log("metodo leer" + this.listado);
+    console.log(this.idPersona);
   }
 
 }

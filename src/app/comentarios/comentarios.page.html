@@ -1,9 +1,28 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/detalle">
+      </ion-back-button>
+    </ion-buttons>
     <ion-title>Comentarios</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div *ngIf="listado.length > 0">
+    <ion-list>
+      <div *ngFor="let aux of listado">
+        <ion-item>
+          <ion-label>{{aux.id}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{aux.name}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{aux.email}}</ion-label>
+        </ion-item>
+      </div>
+    </ion-list>
+  </div>
 
 </ion-content>
