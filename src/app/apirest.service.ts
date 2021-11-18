@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { CrudService } from './crud.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,8 @@ export class ApirestService {
   datos: any;
   private apiURL = 'https://jsonplaceholder.typicode.com/'
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private crud: CrudService) { }
 
   getUsers()
   {
@@ -48,12 +50,23 @@ export class ApirestService {
     let url = this.apiURL + 'users/' + id +'/posts';
     return new Promise((resolve, reject) =>
     {
-      this.http.get(url).subscribe((data: any) =>
+      this.http.get(url).subscribe((data: []) =>
       {
         data.forEach(item => {this.listado.push(item) });
-        console.table(this.listado);
+        //console.table(this.listado);
+        for (let i = 0; i < this.listado.length; i++)
+        {
+          const elemento = i;
+          this.crud.set(String(elemento), this.listado[elemento]);
+        }
       },
-      error => { console.log("error en la solicitud")
+      error => {
+        for (let i = 0; i < 10; i++)
+        {
+          const elemento = i;
+          this.crud.get(String(elemento)).then(item => {this.listado.push(item)});
+        }
+        console.log(this.listado);
       })
     })
   }
@@ -67,9 +80,19 @@ export class ApirestService {
       this.http.get(url).subscribe((data: []) => {
         resolve(data)
         data.forEach(item => {this.listado.push(item) });
+        for (let i = 0; i < this.listado.length; i++)
+        {
+          const elemento = i;
+          this.crud.set("post" + elemento, this.listado[i]);
+        }
       },
       error => {
-        console.log("error en la solicitud")
+        for (let i = 0; i < 5; i++)
+        {
+          const elemento = i;
+          this.crud.get("post" + String(elemento)).then(item => {this.listado.push(item)});
+        }
+        console.log(this.listado)
       })
     })
   }

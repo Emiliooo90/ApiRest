@@ -25,7 +25,7 @@ export class ComentariosPage implements OnInit {
 
   async leer()
   {
-    await this.apirestService.getComment(this.idPersona);
+    this.apirestService.getComment(this.idPersona);
     this.listado = this.apirestService.listado;
     console.log("metodo leer" + this.listado);
     console.log(this.idPersona);

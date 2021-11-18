@@ -16,9 +16,9 @@ export class CrudService {
      await this.storage.create();
    }
 
-   async set(key: String, valor: any)
+   async set(key: any, valor: any)
    {
-     await this.storage.set(valor[0].id, valor);
+     await this.storage.set(key, valor);
    }
 
    get(id)
